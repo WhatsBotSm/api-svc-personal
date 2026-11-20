@@ -1,0 +1,15 @@
+# PostgreSQL para desarrollo/QA con Docker (alternativa al PostgreSQL embebido de `npm run db`).
+# Uso:  docker compose up -d   y luego en backend/:  DATABASE_URL=postgres://uttec:uttec_dev@localhost:5432/uttec_dual npm run reset
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: uttec
+      POSTGRES_PASSWORD: uttec_dev
+      POSTGRES_DB: uttec_dual
+    ports:
+      - "5432:5432"
+    volumes:
+      - dualdb:/var/lib/postgresql/data
+volumes:
+  dualdb:

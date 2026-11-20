@@ -1,0 +1,23 @@
+{
+  "name": "api-svc-personal",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "db": "node scripts/dev-db.js",
+    "migrate": "node db/migrate.js",
+    "seed": "node db/seed.js",
+    "reset": "node db/migrate.js && node db/seed.js",
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.0.0",
+    "embedded-postgres": "*",
+    "express": "^5.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.0"
+  }
+}
