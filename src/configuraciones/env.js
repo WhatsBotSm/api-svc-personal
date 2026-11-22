@@ -2,7 +2,7 @@ import 'dotenv/config'
 
 const obligatorias = [
   'DB_HOST', 'DB_PORT', 'DB_USER', 'DB_PASSWORD', 'DB_NAME',
-  'SERVICE_TOKEN', 'JWT_PRIVATE_KEY_PATH', 'JWT_PUBLIC_KEY_PATH',
+  'INTERNAL_TOKEN', 'JWT_PRIVATE_KEY_PATH', 'JWT_PUBLIC_KEY_PATH',
 ]
 const faltantes = obligatorias.filter((k) => !process.env[k])
 if (faltantes.length) {
@@ -24,7 +24,8 @@ export const env = {
   JWT_PRIVATE_KEY_PATH: process.env.JWT_PRIVATE_KEY_PATH,
   JWT_PUBLIC_KEY_PATH: process.env.JWT_PUBLIC_KEY_PATH,
   JWT_EXPIRES: process.env.JWT_EXPIRES ?? '1h',
-  SERVICE_TOKEN: process.env.SERVICE_TOKEN,
+  INTERNAL_TOKEN: process.env.INTERNAL_TOKEN,
+  NUM_REQ_MAX_ACCESO: Number(process.env.NUM_REQ_MAX_ACCESO ?? 20),
   CORS_ORIGIN: process.env.CORS_ORIGIN?.split(',') ?? true,
   USE_DEMO_UNIVERSIDAD: process.env.USE_DEMO_UNIVERSIDAD === 'true',
   API_URL_UNIVERSIDAD: process.env.API_URL_UNIVERSIDAD,

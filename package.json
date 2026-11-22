@@ -4,20 +4,22 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "db": "node scripts/dev-db.js",
-    "migrate": "node db/migrate.js",
-    "seed": "node db/seed.js",
-    "reset": "node db/migrate.js && node db/seed.js",
-    "dev": "node --watch src/server.js",
-    "start": "node src/server.js"
-  },
+  "migrate": "node db/migrate.js",
+  "seed": "node db/seed.js",
+  "dev": "node --watch app.js",
+  "start": "node app.js",
+  "probar:dao": "node scripts/probar-dao.js"
+},
   "dependencies": {
     "bcryptjs": "^3.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.0.0",
     "embedded-postgres": "*",
     "express": "^5.0.0",
+    "express-rate-limit": "^8.7.5",
+    "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.12.1",
     "pg": "^8.13.0"
   }
 }
