@@ -2,7 +2,11 @@ import { db } from '../configuraciones/baseDatos.js'
 
 const COLUMNAS = `pd.id_personal_dual, pd.tipo, pd.puesto, pd.grado_academico, pd.id_persona, pd.id_empresa,
                   p.nombre, p.apellido_paterno, p.apellido_materno, p.telefono, p.correo,
-                  p.id_externo, p.origen_datos`
+                  p.id_externo, p.origen_datos, cu.activo`
+
+const DESDE = `FROM personal_dual pd
+                 JOIN persona p ON p.id_persona = pd.id_persona
+                 LEFT JOIN cat_user cu ON cu.id_persona = pd.id_persona`
 
 // Origen: INSERT de POST /usuarios (rama que no es ALUMNO)
 export const crear = (d, x = db) =>
@@ -14,14 +18,14 @@ export const crear = (d, x = db) =>
 
 export const buscarPorId = (id, x = db) =>
   x.one(
-    `SELECT ${COLUMNAS} FROM personal_dual pd JOIN persona p ON p.id_persona = pd.id_persona
+    `SELECT ${COLUMNAS} ${DESDE}
       WHERE pd.id_personal_dual = $1`,
     [id],
   )
 
 export const buscarPorIds = (ids, x = db) =>
   x.all(
-    `SELECT ${COLUMNAS} FROM personal_dual pd JOIN persona p ON p.id_persona = pd.id_persona
+    `SELECT ${COLUMNAS} ${DESDE}
       WHERE pd.id_personal_dual = ANY($1::int[])`,
     [ids],
   )
@@ -33,8 +37,7 @@ export const listar = ({ tipo, id_empresa } = {}, x = db) => {
   if (tipo) { params.push(tipo); where.push(`pd.tipo = $${params.length}`) }
   if (id_empresa) { params.push(id_empresa); where.push(`pd.id_empresa = $${params.length}`) }
   return x.all(
-    `SELECT ${COLUMNAS} FROM personal_dual pd JOIN persona p ON p.id_persona = pd.id_persona
-      WHERE ${where.join(' AND ')} ORDER BY pd.id_personal_dual`,
+    `SELECT ${COLUMNAS} ${DESDE} WHERE ${where.join(' AND ')} ORDER BY pd.id_personal_dual`,
     params,
   )
 }
